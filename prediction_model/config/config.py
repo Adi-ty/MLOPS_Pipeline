@@ -51,6 +51,11 @@ S3_BUCKET = "loanprediction"
 
 FOLDER="datadrift"
 
+# MinIO configuration
+MINIO_ENDPOINT = "http://localhost:9000"
+MINIO_ACCESS_KEY = "minioadmin"
+MINIO_SECRET_KEY = "minioadmin"
+
 TRACKING_URI="http://ec2-3-17-191-241.us-east-2.compute.amazonaws.com:5000/"
 
 

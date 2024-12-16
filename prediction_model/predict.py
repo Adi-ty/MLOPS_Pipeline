@@ -5,7 +5,7 @@ import mlflow
 
 
 
-def generate_predictions(data_input):
+def generate_predictions(data_input): 
     data = pd.DataFrame(data_input)
     experiment_name = config.EXPERIMENT_NAME
     experiment = mlflow.get_experiment_by_name(experiment_name)
@@ -15,10 +15,11 @@ def generate_predictions(data_input):
     best_run_id=best_run['run_id']
     best_model='runs:/' + best_run_id + config.MODEL_NAME
     loan_prediction_model=mlflow.sklearn.load_model(best_model)
+    print("best_model: ", best_model)
     prediction=loan_prediction_model.predict(data)
     output = np.where(prediction==1,'Y','N')
     result = {"prediction":output}
-    return result
+    return result 
 
 
 def generate_predictions_batch(data_input):

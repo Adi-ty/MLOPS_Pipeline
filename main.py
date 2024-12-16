@@ -14,27 +14,27 @@ from datetime import datetime
 from prometheus_fastapi_instrumentator import Instrumentator
 
 
-def upload_to_s3(file_content, filename):
-    s3 = boto3.client('s3')
+# def upload_to_s3(file_content, filename):
+#     s3 = boto3.client('s3')
     
-    current_date = datetime.now().strftime("%Y-%m-%d")
-    if filename.endswith('.csv'):
-        filename = filename[:-4]
+#     current_date = datetime.now().strftime("%Y-%m-%d")
+#     if filename.endswith('.csv'):
+#         filename = filename[:-4]
         
-    current_datetime = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
-    folder_path = f"{config.FOLDER}/{current_date}"
+#     current_datetime = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+#     folder_path = f"{config.FOLDER}/{current_date}"
  
-    filename_with_datetime = f"{filename}_{current_datetime}.csv"
+#     filename_with_datetime = f"{filename}_{current_datetime}.csv"
     
-    s3_key = f"{folder_path}/{filename_with_datetime}"
+#     s3_key = f"{folder_path}/{filename_with_datetime}"
 
-    response = s3.put_object(Bucket=config.S3_BUCKET, Key=s3_key, Body=file_content)
+#     response = s3.put_object(Bucket=config.S3_BUCKET, Key=s3_key, Body=file_content)
   
-    return s3_key 
+#     return s3_key 
 
-# mlflow.set_tracking_uri("http://localhost:5000")
+mlflow.set_tracking_uri("http://localhost:5000")
 
-mlflow.set_tracking_uri(config.TRACKING_URI)
+# mlflow.set_tracking_uri(config.TRACKING_URI)
 
 app = FastAPI(
     title="Loan Prediction App using FastAPI - MLOps",
@@ -135,7 +135,7 @@ async def batch_predict(file: UploadFile = File(...)):
     df['Prediction'] = predictions
     result = df.to_csv(index=False)
     
-    s3_key = upload_to_s3(result.encode('utf-8'), file.filename)
+    # s3_key = upload_to_s3(result.encode('utf-8'), file.filename)
 
     return StreamingResponse(io.BytesIO(result.encode('utf-8')), media_type="text/csv", headers={"Content-Disposition":"attachment; filename=predictions.csv"})
 

@@ -9,14 +9,14 @@ import xgboost as xgb
 from prediction_model.config import config
 from prediction_model.processing.data_handling import load_dataset
 import prediction_model.processing.preprocessing as pp 
-import prediction_model.pipeline as pipe
+# import prediction_model.pipeline as pipe
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler
 
 
-#mlflow.set_tracking_uri("http://127.0.0.1:5000")
+mlflow.set_tracking_uri("http://127.0.0.1:5000")
 
-mlflow.set_tracking_uri(config.TRACKING_URI)
+# mlflow.set_tracking_uri(config.TRACKING_URI)
 
 def get_data(input):
     data=load_dataset(input)
@@ -108,7 +108,3 @@ trials = Trials()
 best_params = fmin(fn=objective, space=search_space, algo=tpe.suggest, max_evals=5, trials=trials)
 
 print("Best hyperparameters:", best_params)
-
-
-
-
